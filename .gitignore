@@ -1,0 +1,4 @@
+# 存放用户名和密码
+users.secret.json
+report
+.idea/
