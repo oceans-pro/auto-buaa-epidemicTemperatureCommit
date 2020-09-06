@@ -13,7 +13,7 @@ def log(file, data):
 
 
 def log_data(driver, file):
-    '''
+    """
     1. 填报日期
     2. 姓名
     3. 学工号
@@ -23,7 +23,7 @@ def log_data(driver, file):
     7. 是否外出
     8. 是否隔离
     9. 其他情况  （不填）
-    '''
+    """
     key_arr = ['填报日期', '姓名', '学工号', '地址', '温度范围', '是否在校', '是否外出', '是否隔离']
     document = driver
     value_arr = []
@@ -46,7 +46,7 @@ def log_data(driver, file):
     # 将cookies保存为json格式
 
     log(file, '4. 当前填报信息为\n' + json.dumps(result_map, ensure_ascii=False) + '\r\n')
-    driver.quit()
+    # driver.quit()
 
 
 def auto_submit(username, password):
@@ -61,7 +61,7 @@ def auto_submit(username, password):
     options = webdriver.ChromeOptions()
     # 无头无法获取地址
     # for debug
-    # options.add_argument('--headless')  # 确保无头
+    options.add_argument('--headless')  # 确保无头，对于无界面系统
     options.add_argument('--disable-gpu')  # 无需要gpu加速
     options.add_argument('--no-sandbox')  # 无沙箱
     # options.add_argument('--disable-dev-shm-usage')
@@ -110,18 +110,23 @@ def auto_submit(username, password):
         log(file, '2. 进入填报页面')
         dom_submit_btn = document.find_element_by_css_selector('.footers a')
         tip = dom_submit_btn.text
-        need_commit = (tip.find('已提交过') != -1) and (tip.find('未到填报时间') != -1)
-        need_commit = True
+        need_commit = tip.find('提交信息') > -1
 
         if need_commit:
+            time.sleep(1)
             dom_btn_tw = document.find_element_by_css_selector('[name=tw] div div span')
             dom_btn_pos = document.find_element_by_css_selector('[name=area] input')
+            dom_submit_btn = document.find_element_by_css_selector('.footers a')
+
             dom_btn_tw.click()
             dom_btn_pos.click()
-            time.sleep(1)
+            time.sleep(2)
             # check
             try:
-                # dom_submit_btn.click()
+                dom_submit_btn.click()
+                time.sleep(1)
+                dom_confirm = document.find_element_by_css_selector('.wapcf-btn-ok')
+                dom_confirm.click()
                 print('3. 提交成功')
                 log(file, '3. 提交成功')
                 log_data(driver, file)
@@ -134,6 +139,7 @@ def auto_submit(username, password):
             log(file, '3. 不需要提交 ：' + tip)
             log_data(driver, file)
         file.close()
+        driver.quit()
 
 
 if __name__ == '__main__':

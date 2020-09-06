@@ -55,5 +55,5 @@ contab -e
 
 ```shell script
 # 每天下午5点打卡
-0 0 17 * * ? python3 ~/reminder-helper/main.py
+0 30 19 * * ? python3 /root/www/reminder-helper/main.py
 ```
