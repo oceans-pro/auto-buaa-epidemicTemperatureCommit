@@ -54,6 +54,6 @@ contab -e
 ```
 
 ```shell script
-# 每天下午5点打卡
+# 每天下午晚上七点半打卡
 0 30 19 * * ? python3 /root/www/reminder-helper/main.py
 ```
