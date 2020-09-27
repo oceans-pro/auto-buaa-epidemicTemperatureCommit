@@ -50,7 +50,7 @@ def log_data(driver, file):
 
 
 def auto_submit(username, password):
-    filename = 'report/' + username + '.log'
+    filename = '/root/www/reminder-helper/report/' + username + '.log'
     file = open(filename, 'a', encoding='utf-8')
 
     print('0. 执行脚本')
@@ -116,10 +116,12 @@ def auto_submit(username, password):
             time.sleep(1)
             dom_btn_tw = document.find_element_by_css_selector('[name=tw] div div span')
             dom_btn_pos = document.find_element_by_css_selector('[name=area] input')
+            dom_btn_school = document.find_element_by_css_selector('[name=sfzx] div div span')
             dom_submit_btn = document.find_element_by_css_selector('.footers a')
 
             dom_btn_tw.click()
             dom_btn_pos.click()
+            dom_btn_school.click()
             time.sleep(2)
             # check
             try:
