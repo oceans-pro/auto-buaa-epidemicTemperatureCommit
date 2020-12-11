@@ -50,7 +50,7 @@ linux：可参考我的配置步骤
 # 列出全部的定时任务
 crontab -l 
 # 编辑定时任务
-contab -e 
+crontab -e 
 ```
 
 ```shell script
